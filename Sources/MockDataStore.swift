@@ -13,8 +13,22 @@ import AEPServices
 import Foundation
 
 public class MockDataStore: NamedCollectionProcessing {
+    private let queue = DispatchQueue(label: "com.adobe.mockdatastore.syncqueue")
+
+    private var _dict = ThreadSafeDictionary<String, Any>()
+    public var dict: ThreadSafeDictionary<String, Any> {
+        get {
+            return queue.sync { _dict }
+        }
+        set {
+            queue.sync { _dict = newValue }
+        }
+    }
     private var appGroup: String?
 
+    public init() {}
+
+    // MARK: AppGroup methods
     public func getAppGroup() -> String? {
         return appGroup
     }
@@ -23,10 +37,7 @@ public class MockDataStore: NamedCollectionProcessing {
         self.appGroup = appGroup
     }
 
-    public var dict = [String: Any?]()
-
-    public init() {}
-
+    // MARK: DataStore dictionary methods
     public func set(collectionName _: String, key: String, value: Any?) {
         dict[key] = value
     }
@@ -36,6 +47,6 @@ public class MockDataStore: NamedCollectionProcessing {
     }
 
     public func remove(collectionName _: String, key: String) {
-        dict.removeValue(forKey: key)
+        _ = dict.removeValue(forKey: key)
     }
 }

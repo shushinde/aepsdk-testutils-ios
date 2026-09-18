@@ -10,17 +10,19 @@
 // governing permissions and limitations under the License.
 //
 
-@testable import AEPCore
 import Foundation
+
+@testable import AEPCore
 
 /// Testable implementation for `ExtensionRuntime`
 ///
 /// Enable easy setup for the input and verification of the output of an extension
 /// See also AEPCore/Mocks
 public class TestableExtensionRuntime: ExtensionRuntime {
+    private let queue = DispatchQueue(label: "com.adobe.testableextensionruntime.syncqueue")
 
     public var listeners: [String: EventListener] = [:]
-    public var dispatchedEvents: [Event] = []
+    private var _dispatchedEvents: [Event] = []
     public var createdSharedStates: [[String: Any]?] = []
     public var createdXdmSharedStates: [[String: Any]?] = []
     public var mockedSharedStates: [String: SharedStateResult] = [:]
@@ -29,6 +31,14 @@ public class TestableExtensionRuntime: ExtensionRuntime {
     public var receivedEnforceOrder: Bool = false
     public var mockEventHistoryResults: [EventHistoryResult] = []
     public var ignoredEvents = Set<String>()
+
+    public var receivedRecordHistoricalEvent: Event? = nil
+    /// Tracks whether ``recordHistoricalEvent(_:handler:)`` was called.
+    public var recordHistoricalEventCalled = false
+
+    /// Controls the success/failure value that will be passed to the handler in ``recordHistoricalEvent(_:handler:)``
+    /// Set to `true` to simulate success, `false` to simulate failure.
+    public var recordHistoricalEventResult = true
 
     public init() {}
 
@@ -45,7 +55,9 @@ public class TestableExtensionRuntime: ExtensionRuntime {
         if shouldIgnore(event) {
             return
         }
-        dispatchedEvents += [event]
+        queue.async {
+            self._dispatchedEvents += [event]
+        }
     }
 
     public func createSharedState(data: [String: Any], event _: Event?) {
@@ -90,6 +102,20 @@ public class TestableExtensionRuntime: ExtensionRuntime {
             return mockedXdmSharedStates["\(extensionName)-\(id)"] ?? mockedXdmSharedStates["\(extensionName)"]
         }
         return mockedXdmSharedStates["\(extensionName)"]
+    }
+
+    /// Records a historical event
+    /// - Parameters:
+    ///   - event: The event to record
+    ///   - handler: Callback with operation result
+    /// 
+    /// The success or failure passed to the handler is controlled by setting the
+    /// `recordHistoricalEventResult` property (true = success, false = failure).
+    /// The `recordHistoricalEventCalled` property can be used to verify this method was called.
+    public func recordHistoricalEvent(_ event: AEPCore.Event, handler: ((Bool) -> Void)?) {
+        receivedRecordHistoricalEvent = event
+        recordHistoricalEventCalled = true
+        handler?(recordHistoricalEventResult)
     }
 
     public func startEvents() {}
@@ -181,6 +207,18 @@ public class TestableExtensionRuntime: ExtensionRuntime {
 
 /// Convenience properties for `TestableExtensionRuntime`
 public extension TestableExtensionRuntime {
+    var dispatchedEvents: [Event] {
+        get {
+            return queue.sync {
+                _dispatchedEvents
+            }
+        }
+        set {
+            queue.async {
+                self._dispatchedEvents = newValue
+            }
+        }
+    }
 
     /// First dispatched event
     var firstEvent: Event? {

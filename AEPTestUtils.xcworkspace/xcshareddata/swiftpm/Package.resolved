@@ -1,0 +1,15 @@
+{
+  "originHash" : "e0885817150cd0608557b94dc590068a5a9b863c0d3c4a1c5b2275d1bf2a5771",
+  "pins" : [
+    {
+      "identity" : "aepsdk-rulesengine-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/adobe/aepsdk-rulesengine-ios.git",
+      "state" : {
+        "revision" : "514d2b3787c545bfa6749ffce5dd3e6f560c9319",
+        "version" : "5.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
