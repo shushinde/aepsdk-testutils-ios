@@ -14,13 +14,16 @@ destination_for() {
   esac
 }
 
-# AEPTestUtils uses `@testable import AEPCore`/`AEPServices`, so its dependencies must be
-# compiled with testability enabled (ENABLE_TESTABILITY=YES applies to the resolved SPM
-# package dependencies too), otherwise the archive fails with "Unable to find module dependency".
+# AEPTestUtils uses `@testable import AEPCore`/`AEPServices` and references test hooks that
+# AEPCore/AEPServices only expose under `#if DEBUG` (e.g. the assignable `EventHub.shared`).
+# So the whole graph must be built with testability enabled AND the DEBUG compilation
+# condition active; both settings apply to the resolved SPM package dependencies too.
+# Without them the archive fails with "Unable to find module dependency" / "cannot assign to
+# 'let'" / "inaccessible due to 'private'".
 archive_module() {
   local platform=$1
-  xcodebuild archive -scheme "$MODULE" -archivePath "./build/$MODULE-$platform.xcarchive" -destination "$(destination_for "$platform" device)" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES ENABLE_TESTABILITY=YES
-  xcodebuild archive -scheme "$MODULE" -archivePath "./build/$MODULE-${platform}_simulator.xcarchive" -destination "$(destination_for "$platform" simulator)" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES ENABLE_TESTABILITY=YES
+  xcodebuild archive -scheme "$MODULE" -archivePath "./build/$MODULE-$platform.xcarchive" -destination "$(destination_for "$platform" device)" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES ENABLE_TESTABILITY=YES SWIFT_ACTIVE_COMPILATION_CONDITIONS=DEBUG
+  xcodebuild archive -scheme "$MODULE" -archivePath "./build/$MODULE-${platform}_simulator.xcarchive" -destination "$(destination_for "$platform" simulator)" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES ENABLE_TESTABILITY=YES SWIFT_ACTIVE_COMPILATION_CONDITIONS=DEBUG
 }
 
 build_platform() {

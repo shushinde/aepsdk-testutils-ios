@@ -49,15 +49,15 @@ swift package update
 
 # Archive for generic iOS device
 echo '############# Archive for generic iOS device ###############'
-xcodebuild archive -scheme TestProject -destination 'generic/platform=iOS' ENABLE_TESTABILITY=YES
+xcodebuild archive -scheme TestProject -destination 'generic/platform=iOS' ENABLE_TESTABILITY=YES SWIFT_ACTIVE_COMPILATION_CONDITIONS=DEBUG
 
 # Build for generic iOS device
 echo '############# Build for generic iOS device ###############'
-xcodebuild build -scheme TestProject -destination 'generic/platform=iOS' ENABLE_TESTABILITY=YES
+xcodebuild build -scheme TestProject -destination 'generic/platform=iOS' ENABLE_TESTABILITY=YES SWIFT_ACTIVE_COMPILATION_CONDITIONS=DEBUG
 
 # Build for x86_64 simulator
 echo '############# Build for x86_64 simulator ###############'
-xcodebuild build -scheme TestProject -destination 'generic/platform=iOS Simulator' ARCHS=x86_64 ENABLE_TESTABILITY=YES
+xcodebuild build -scheme TestProject -destination 'generic/platform=iOS Simulator' ARCHS=x86_64 ENABLE_TESTABILITY=YES SWIFT_ACTIVE_COMPILATION_CONDITIONS=DEBUG
 
 # Clean up.
 cd ../
