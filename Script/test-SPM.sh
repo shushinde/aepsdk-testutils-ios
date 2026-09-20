@@ -43,21 +43,21 @@ let package = Package(
 
 swift package update
 
+# AEPTestUtils uses `@testable import AEPCore`/`AEPServices`, so its dependencies must be
+# compiled with testability enabled. ENABLE_TESTABILITY=YES applies to every target in the
+# build (including the resolved SPM package dependencies), which satisfies `@testable import`.
+
 # Archive for generic iOS device
 echo '############# Archive for generic iOS device ###############'
-xcodebuild archive -scheme TestProject -destination 'generic/platform=iOS'
+xcodebuild archive -scheme TestProject -destination 'generic/platform=iOS' ENABLE_TESTABILITY=YES
 
 # Build for generic iOS device
 echo '############# Build for generic iOS device ###############'
-xcodebuild build -scheme TestProject -destination 'generic/platform=iOS'
-
-# Build for i386 simulator
-echo '############# Build for i386 simulator ###############'
-xcodebuild build -scheme TestProject -destination 'generic/platform=iOS Simulator' ARCHS=i386
+xcodebuild build -scheme TestProject -destination 'generic/platform=iOS' ENABLE_TESTABILITY=YES
 
 # Build for x86_64 simulator
 echo '############# Build for x86_64 simulator ###############'
-xcodebuild build -scheme TestProject -destination 'generic/platform=iOS Simulator' ARCHS=x86_64
+xcodebuild build -scheme TestProject -destination 'generic/platform=iOS Simulator' ARCHS=x86_64 ENABLE_TESTABILITY=YES
 
 # Clean up.
 cd ../
