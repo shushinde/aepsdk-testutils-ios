@@ -18,23 +18,6 @@ clean-tvos-test-files:
 open:
 	open $(PROJECT_NAME).xcworkspace
 
-archive: _archive
-
-ci-archive: _archive
-
-_archive: clean build-ios build-tvos
-	./Script/archive.sh create-xcframeworks
-
-build-ios:
-	./Script/archive.sh build-ios
-
-build-tvos:
-	./Script/archive.sh build-tvos
-
-zip:
-	cd build && zip -r -X $(EXTENSION_NAME).xcframework.zip $(EXTENSION_NAME).xcframework/
-	swift package compute-checksum build/$(EXTENSION_NAME).xcframework.zip
-
 unit-test-ios: clean-ios-test-files
 	@echo "######################################################################"
 	@echo "### Unit Testing iOS"
