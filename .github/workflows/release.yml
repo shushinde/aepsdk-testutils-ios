@@ -30,6 +30,7 @@ jobs:
   release:
     permissions:
       contents: write
+      pull-requests: write
     uses: shushinde/aepsdk-commons/.github/workflows/ios-spm-release.yml@main
     with:
       tag: ${{ github.event.inputs.tag }}

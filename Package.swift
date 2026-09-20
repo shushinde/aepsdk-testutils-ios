@@ -20,7 +20,7 @@ let package = Package(
         .library(name: "AEPTestUtils", type: .dynamic, targets: ["AEPTestUtils"])
     ],
     dependencies: [
-        .package(path: "../aepsdk-core-ios")
+        .package(url: "https://github.com/adobe/aepsdk-core-ios.git", .upToNextMajor(from: "5.2.0"))
     ],
     targets: [
         .target(name: "AEPTestUtils",
