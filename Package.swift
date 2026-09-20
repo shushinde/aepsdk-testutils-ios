@@ -24,7 +24,10 @@ let package = Package(
     ],
     targets: [
         .target(name: "AEPTestUtils",
-                dependencies: ["AEPCore"],
+                dependencies: [
+                    .product(name: "AEPCore", package: "aepsdk-core-ios"),
+                    .product(name: "AEPServices", package: "aepsdk-core-ios")
+                ],
                 path: "Sources")
     ]
 )
