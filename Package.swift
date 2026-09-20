@@ -17,7 +17,7 @@ let package = Package(
     name: "AEPTestUtils",
     platforms: [.iOS(.v12), .tvOS(.v12)],
     products: [
-        .library(name: "AEPTestUtils", targets: ["AEPTestUtils"])
+        .library(name: "AEPTestUtils", type: .dynamic, targets: ["AEPTestUtils"])
     ],
     dependencies: [
         .package(path: "../aepsdk-core-ios")
