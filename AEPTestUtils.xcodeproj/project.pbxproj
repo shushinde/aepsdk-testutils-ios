@@ -50,8 +50,7 @@
 		4CBE65F42B69CD7100EF4600 /* NamedCollectionDataStore+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBE65F32B69CD7100EF4600 /* NamedCollectionDataStore+TestHelper.swift */; };
 		4CE14ECC2AFDC7F100969B36 /* NodeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE14ECB2AFDC7F100969B36 /* NodeConfig.swift */; };
 		9477A7BE305C192100D5FE46 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9477A7BD305C192100D5FE46 /* XCTest.framework */; };
-		9482A81C306007BE00B34623 /* AEPCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9482A81B306007BE00B34623 /* AEPCore */; };
-		9482A81E306007BE00B34623 /* AEPServices in Frameworks */ = {isa = PBXBuildFile; productRef = 9482A81D306007BE00B34623 /* AEPServices */; };
+		9482A8353060E53700B34623 /* AEPCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9482A8343060E53700B34623 /* AEPCore */; };
 		D4ABABAE251A7D95008076BF /* AEPTestUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D444995F2519506B0093B364 /* AEPTestUtils.framework */; };
 		E1D6B47000000000000A0102 /* Event+AnyCodableComparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D6B47000000000000A0101 /* Event+AnyCodableComparable.swift */; };
 		E1D6B47000000000000A0202 /* Event+Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D6B47000000000000A0201 /* Event+Timestamp.swift */; };
@@ -136,8 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9482A81E306007BE00B34623 /* AEPServices in Frameworks */,
-				9482A81C306007BE00B34623 /* AEPCore in Frameworks */,
+				9482A8353060E53700B34623 /* AEPCore in Frameworks */,
 				9477A7BE305C192100D5FE46 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,8 +257,7 @@
 			);
 			name = AEPTestUtils;
 			packageProductDependencies = (
-				9482A81B306007BE00B34623 /* AEPCore */,
-				9482A81D306007BE00B34623 /* AEPServices */,
+				9482A8343060E53700B34623 /* AEPCore */,
 			);
 			productName = AEPEdge;
 			productReference = D444995F2519506B0093B364 /* AEPTestUtils.framework */;
@@ -317,7 +314,7 @@
 			);
 			mainGroup = D4D5B4DE242EBB1600CAB6E4;
 			packageReferences = (
-				9482A81A306007BE00B34623 /* XCRemoteSwiftPackageReference "aepsdk-core-ios" */,
+				9482A8333060E53700B34623 /* XCRemoteSwiftPackageReference "aepsdk-core-ios" */,
 			);
 			productRefGroup = D4D5B4E8242EBB1600CAB6E4 /* Products */;
 			projectDirPath = "";
@@ -717,26 +714,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9482A81A306007BE00B34623 /* XCRemoteSwiftPackageReference "aepsdk-core-ios" */ = {
+		9482A8333060E53700B34623 /* XCRemoteSwiftPackageReference "aepsdk-core-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/adobe/aepsdk-core-ios/";
+			repositoryURL = "https://github.com/shushinde/aepsdk-core-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.11.0;
+				minimumVersion = 5.13.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9482A81B306007BE00B34623 /* AEPCore */ = {
+		9482A8343060E53700B34623 /* AEPCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9482A81A306007BE00B34623 /* XCRemoteSwiftPackageReference "aepsdk-core-ios" */;
+			package = 9482A8333060E53700B34623 /* XCRemoteSwiftPackageReference "aepsdk-core-ios" */;
 			productName = AEPCore;
-		};
-		9482A81D306007BE00B34623 /* AEPServices */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9482A81A306007BE00B34623 /* XCRemoteSwiftPackageReference "aepsdk-core-ios" */;
-			productName = AEPServices;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
